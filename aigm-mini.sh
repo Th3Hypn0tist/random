@@ -16,6 +16,9 @@ STAGE3=$(curl -s https://distfiles.gentoo.org/releases/amd64/autobuilds/latest-s
 wget https://distfiles.gentoo.org/releases/amd64/autobuilds/${STAGE3}
 tar xpvf stage3-*.tar.* --xattrs-include='*.*' --numeric-owner
 
+# DNS chrootiin
+cp /etc/resolv.conf /mnt/gentoo/etc/
+
 echo "[3/12] Preparing chroot…"
 mount --types proc /proc /mnt/gentoo/proc
 mount --rbind /sys /mnt/gentoo/sys
@@ -57,10 +60,11 @@ make -j4
 
 echo "[11/12] Creating tiny TUI…"
 cat << 'EOT' > /aigm/tui/tui.py
+#!/usr/bin/env python3
 while True:
     try:
         msg = input("AIGM-mini > ")
-        echo(f"[echo] {msg}")
+        print(f"[echo] {msg}")
     except EOFError:
         break
 EOT
