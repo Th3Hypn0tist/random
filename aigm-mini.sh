@@ -60,7 +60,7 @@ cat << 'EOT' > /aigm/tui/tui.py
 while True:
     try:
         msg = input("AIGM-mini > ")
-        print(f"[echo] {msg}")
+        echo(f"[echo] {msg}")
     except EOFError:
         break
 EOT
