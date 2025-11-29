@@ -42,6 +42,10 @@ echo "[D3] Install GRUB to ${DISK} (BIOS mode)"
 grub-install --target=i386-pc "$DISK"
 grub-mkconfig -o /boot/grub/grub.cfg
 
+echo "[E0] FI keyboard"
+echo 'KEYMAP="fi"' > /etc/conf.d/keymaps
+rc-update add keymaps default 2>/dev/null || true
+
 echo "[E1] AIGM directory structure"
 /bin/mkdir -p /aigm/{tui,llm,sessions,users,config,monitor}
 
@@ -73,7 +77,7 @@ chown aigm:aigm /home/aigm/.bash_profile
 
 echo "[F1] OpenRC services"
 rc-update add sshd default 2>/dev/null || true
-echo 'KEYMAP="fi"' > /etc/conf.d/keymaps
+
 echo "[DONE] AIGM-mini hardened base install complete."
 echo "IMPORTANT: Change passwords for 'root' and 'aigm' immediately after first login."
 CHROOTEOF
