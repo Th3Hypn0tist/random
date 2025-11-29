@@ -73,7 +73,7 @@ chown aigm:aigm /home/aigm/.bash_profile
 
 echo "[F1] OpenRC services"
 rc-update add sshd default 2>/dev/null || true
-
+echo 'KEYMAP="fi"' > /etc/conf.d/keymaps
 echo "[DONE] AIGM-mini hardened base install complete."
 echo "IMPORTANT: Change passwords for 'root' and 'aigm' immediately after first login."
 CHROOTEOF
