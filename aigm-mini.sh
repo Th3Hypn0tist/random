@@ -3,63 +3,80 @@ set -e
 
 DISK=/dev/sda
 
-echo "[1/12] Partitioning disk…"
+echo "[1] Partitioning…"
 parted -s $DISK mklabel gpt
 parted -s $DISK mkpart primary ext4 1MiB 100%
 
 mkfs.ext4 ${DISK}1
 mount ${DISK}1 /mnt/gentoo
 
-echo "[2/12] Downloading stage3…"
+echo "[2] Fetching stage3…"
 cd /mnt/gentoo
-STAGE3=$(curl -s https://distfiles.gentoo.org/releases/amd64/autobuilds/latest-stage3-amd64.txt | awk '!/#/ {print $1}')
+STAGE3=$(curl -s https://distfiles.gentoo.org/releases/amd64/autobuilds/latest-stage3-amd64-openrc.txt | awk '!/^#/ {print $1; exit}')
 wget https://distfiles.gentoo.org/releases/amd64/autobuilds/${STAGE3}
 tar xpvf stage3-*.tar.* --xattrs-include='*.*' --numeric-owner
 
-# DNS chrootiin
-cp /etc/resolv.conf /mnt/gentoo/etc/
-
-echo "[3/12] Preparing chroot…"
-mount --types proc /proc /mnt/gentoo/proc
+echo "[3] Preparing chroot…"
+mount -t proc /proc /mnt/gentoo/proc
 mount --rbind /sys /mnt/gentoo/sys
 mount --make-rslave /mnt/gentoo/sys
 mount --rbind /dev /mnt/gentoo/dev
 mount --make-rslave /mnt/gentoo/dev
 
-echo "[4/12] Entering chroot to install system…"
-cat << 'EOF' > /mnt/gentoo/aigm-mini-install.sh
+echo "[4] Writing final installer inside chroot…"
+cat << 'EOF' > /mnt/gentoo/aigm-final.sh
 #!/bin/bash
 set -e
-
 source /etc/profile
 
-echo "[5/12] Syncing portage…"
+echo "[A] Portage sync…"
 emerge-webrsync
 
-echo "[6/12] Installing kernel and tools…"
-emerge gentoo-kernel-bin git python jq cmake nano
+echo "[B] Basic system packages…"
+emerge --quiet-build=y gentoo-kernel-bin grub sudo nano python jq cmake git
 
-echo "[7/12] Creating AIGM directory structure…"
-mkdir -p /aigm/{tui,llm,sessions,users,config,monitor}
+echo "[C] fstab…"
+cat << 'EOT' > /etc/fstab
+/dev/sda1   /   ext4   noatime   0 1
+EOT
 
-echo "[8/12] Installing GRUB…"
-echo 'GRUB_PLATFORMS="pc"' >> /etc/portage/make.conf
-emerge grub
-grub-install /dev/sda
+echo "[D] hostname…"
+echo "hostname=\"aigm-mini\"" > /etc/conf.d/hostname
+
+echo "[E] networking…"
+echo 'config_eth0="dhcp"' > /etc/conf.d/net
+ln -s /etc/init.d/net.lo /etc/init.d/net.eth0
+rc-update add net.eth0 default
+
+echo "[F] root password…"
+echo "root:root" | chpasswd
+
+echo "[G] timezone…"
+echo "UTC" > /etc/timezone
+emerge --config sys-libs/timezone-data
+
+echo "[H] locale…"
+echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+locale-gen
+eselect locale set en_US.utf8
+
+echo "[I] Kernel install ensured…"
+/usr/share/gentoo-kernel/initramfs.sh || true
+
+echo "[J] Install GRUB…"
+grub-install --target=i386-pc /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 
-echo "[9/12] Creating user…"
-useradd -m aigm
+echo "[K] AIGM directory structure…"
+mkdir -p /aigm/{tui,llm,sessions,users,config,monitor}
+
+echo "[L] Add user…"
+useradd -m -G wheel aigm
 echo "aigm:aigm" | chpasswd
+echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/00-wheel-nopasswd
 
-echo "[10/12] Installing llama.cpp…"
-cd /aigm/llm
-git clone https://github.com/ggerganov/llama.cpp
-cd llama.cpp
-make -j4
-
-echo "[11/12] Creating tiny TUI…"
-cat << 'EOT' > /aigm/tui/tui.py
+echo "[M] Tiny TUI…"
+cat << 'EOT2' > /aigm/tui/tui.py
 #!/usr/bin/env python3
 while True:
     try:
@@ -67,17 +84,19 @@ while True:
         print(f"[echo] {msg}")
     except EOFError:
         break
-EOT
-
+EOT2
 chmod +x /aigm/tui/tui.py
 
-echo "[12/12] Installation complete!"
-echo "Reboot and remove LiveCD."
+echo "DONE — exit chroot and reboot."
 EOF
 
-chmod +x /mnt/gentoo/aigm-mini-install.sh
-chroot /mnt/gentoo /aigm-mini-install.sh
-rm /mnt/gentoo/aigm-mini-install.sh
-umount -l /mnt/gentoo/{proc,sys,dev} || true
-umount -l /mnt/gentoo
-echo "DONE — reboot system and remove LiveCD."
+chmod +x /mnt/gentoo/aigm-final.sh
+chroot /mnt/gentoo /aigm-final.sh
+
+echo "[5] Cleaning up & unmounting…"
+umount -l /mnt/gentoo/dev || true
+umount -l /mnt/gentoo/sys || true
+umount -l /mnt/gentoo/proc || true
+umount -l /mnt/gentoo || true
+
+echo "AIGM-mini installed — reboot now!"
