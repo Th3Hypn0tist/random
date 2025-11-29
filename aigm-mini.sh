@@ -2,60 +2,55 @@
 set -e
 
 DISK=/dev/sda
-STATE="/mnt/gentoo/.AIGM/state"
-mkdir -p "$STATE"
+PART=${DISK}1
+MNT=/mnt/gentoo
+STATE="$MNT/.AIGM/state"
 
 step_done() {
     [[ -f "$STATE/$1" ]]
 }
 
 mark_done() {
+    mkdir -p "$STATE"
     touch "$STATE/$1"
 }
 
-# ----------------------
-# STEP 1 — Partitioning
-# ----------------------
-echo "[STEP 1] Partitioning disk"
-if step_done "step1"; then
-    echo "→ skip (already done)"
+echo "[STEP 1] Partitioning disk $DISK"
+# Jos sda1 on jo olemassa → skippaa
+if lsblk | grep -q "^sda1"; then
+    echo "→ skip (partition already exists)"
 else
-    parted -s $DISK mklabel gpt
-    parted -s $DISK mkpart primary ext4 1MiB 100%
-    mark_done "step1"
+    echo "→ creating GPT partition table and partition 'aigm'"
+    parted -s "$DISK" mklabel gpt
+    parted -s "$DISK" mkpart primary ext4 1MiB 100%
+    parted -s "$DISK" name 1 aigm
 fi
 
-# ----------------------
-# STEP 2 — Filesystem
-# ----------------------
-echo "[STEP 2] Creating filesystem"
-if step_done "step2"; then
-    echo "→ skip (already done)"
+echo "[STEP 2] Creating ext4 filesystem labeled 'aigm'"
+if blkid "$PART" 2>/dev/null | grep -q 'TYPE="ext4"'; then
+    echo "→ skip (ext4 already present)"
 else
-    mkfs.ext4 ${DISK}1
-    mark_done "step2"
+    mkfs.ext4 -L aigm "$PART"
 fi
 
-# ----------------------
-# STEP 3 — Mount root
-# ----------------------
-echo "[STEP 3] Mounting /mnt/gentoo"
-mount ${DISK}1 /mnt/gentoo 2>/dev/null || true
-if mount | grep -q "/mnt/gentoo"; then
-    echo "→ mounted OK"
+echo "[STEP 3] Mounting root to $MNT"
+mkdir -p "$MNT"
+if mount | grep -q "on $MNT "; then
+    echo "→ already mounted"
 else
-    echo "→ ERROR: mount failed"; exit 1
+    mount "$PART" "$MNT"
 fi
-mark_done "step3"
 
-# ----------------------
-# STEP 4 — Stage3
-# ----------------------
-echo "[STEP 4] Download + extract Stage3"
-if step_done "step4"; then
-    echo "→ skip (already done)"
+mkdir -p "$STATE"
+
+echo "[STEP 4] Download + extract stage3"
+if [ -f "$MNT/etc/gentoo-release" ]; then
+    echo "→ stage3 already extracted, skipping"
+    mark_done "step4"
+elif step_done "step4"; then
+    echo "→ step4 already marked done"
 else
-    cd /mnt/gentoo
+    cd "$MNT"
     STAGE3=$(curl -s https://distfiles.gentoo.org/releases/amd64/autobuilds/latest-stage3-amd64-openrc.txt \
       | awk '!/^#/ {print $1; exit}')
     echo "[DEBUG] Stage3: $STAGE3"
@@ -64,29 +59,22 @@ else
     mark_done "step4"
 fi
 
-# ----------------------
-# STEP 5 — Bind mounts
-# ----------------------
-echo "[STEP 5] Bind mounts"
+echo "[STEP 5] Bind mounts (proc/sys/dev)"
 if step_done "step5"; then
     echo "→ skip (already done)"
 else
-    mount -t proc /proc /mnt/gentoo/proc
-    mount --rbind /sys /mnt/gentoo/sys
-    mount --make-rslave /mnt/gentoo/sys
-    mount --rbind /dev /mnt/gentoo/dev
-    mount --make-rslave /mnt/gentoo/dev
+    mount -t proc /proc "$MNT/proc"
+    mount --rbind /sys "$MNT/sys"
+    mount --make-rslave "$MNT/sys"
+    mount --rbind /dev "$MNT/dev"
+    mount --make-rslave "$MNT/dev"
     mark_done "step5"
 fi
 
-# ----------------------
-# STEP 6 — Write chroot installer
-# ----------------------
 echo "[STEP 6] Writing chroot installer"
 if step_done "step6"; then
     echo "→ skip (already done)"
 else
-
 cat << 'CHROOTEOF' > /mnt/gentoo/aigm-final.sh
 #!/bin/bash
 set -e
@@ -103,7 +91,6 @@ chg_mark() {
 
 source /etc/profile
 
-# A1 – Portage sync
 echo "[A1] emerge-webrsync"
 if chg_done "A1"; then
     echo "→ skip"
@@ -112,7 +99,6 @@ else
     chg_mark "A1"
 fi
 
-# A2 – Base system install
 echo "[A2] base system packages"
 if chg_done "A2"; then
     echo "→ skip"
@@ -121,16 +107,14 @@ else
     chg_mark "A2"
 fi
 
-# B1 – fstab
-echo "[B1] fstab"
+echo "[B1] fstab (LABEL=aigm)"
 if chg_done "B1"; then
     echo "→ skip"
 else
-    echo "/dev/sda1   /   ext4   noatime   0 1" > /etc/fstab
+    echo "LABEL=aigm   /   ext4   noatime   0 1" > /etc/fstab
     chg_mark "B1"
 fi
 
-# B2 – hostname
 echo "[B2] hostname"
 if chg_done "B2"; then
     echo "→ skip"
@@ -139,8 +123,7 @@ else
     chg_mark "B2"
 fi
 
-# B3 – network
-echo "[B3] network setup"
+echo "[B3] network setup (eth0 dhcp)"
 if chg_done "B3"; then
     echo "→ skip"
 else
@@ -150,7 +133,6 @@ else
     chg_mark "B3"
 fi
 
-# C1 – root password
 echo "[C1] root password"
 if chg_done "C1"; then
     echo "→ skip"
@@ -159,7 +141,6 @@ else
     chg_mark "C1"
 fi
 
-# C2 – timezone
 echo "[C2] timezone"
 if chg_done "C2"; then
     echo "→ skip"
@@ -169,7 +150,6 @@ else
     chg_mark "C2"
 fi
 
-# C3 – locale
 echo "[C3] locale"
 if chg_done "C3"; then
     echo "→ skip"
@@ -180,7 +160,6 @@ else
     chg_mark "C3"
 fi
 
-# D1 – kernel
 echo "[D1] initramfs"
 if chg_done "D1"; then
     echo "→ skip"
@@ -189,7 +168,6 @@ else
     chg_mark "D1"
 fi
 
-# D2 – grub
 echo "[D2] grub-install"
 if chg_done "D2"; then
     echo "→ skip"
@@ -199,8 +177,7 @@ else
     chg_mark "D2"
 fi
 
-# E1 – AIGM dirs
-echo "[E1] dirs"
+echo "[E1] AIGM directories"
 if chg_done "E1"; then
     echo "→ skip"
 else
@@ -208,19 +185,18 @@ else
     chg_mark "E1"
 fi
 
-# E2 – user
-echo "[E2] user"
+echo "[E2] user 'aigm'"
 if chg_done "E2"; then
     echo "→ skip"
 else
     useradd -m -G wheel aigm
     echo "aigm:aigm" | chpasswd
+    mkdir -p /etc/sudoers.d
     echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/00-wheel
     chg_mark "E2"
 fi
 
-# E3 – TUI
-echo "[E3] TUI"
+echo "[E3] tiny TUI"
 if chg_done "E3"; then
     echo "→ skip"
 else
@@ -237,25 +213,20 @@ chmod +x /aigm/tui/tui.py
 chg_mark "E3"
 fi
 
-echo "[DONE]"
+echo "[DONE] chroot install finished"
 CHROOTEOF
 
+chmod +x "$MNT/aigm-final.sh"
 mark_done "step6"
 fi
 
-# ----------------------
-# STEP 7 — Chroot & run installer
-# ----------------------
-echo "[STEP 7] Chroot Installer"
-chroot /mnt/gentoo /aigm-final.sh || echo "[ERR] chroot failed"
+echo "[STEP 7] Chroot installer run"
+chroot "$MNT" /aigm-final.sh || echo "[ERR] chroot installer failed"
 
-# ----------------------
-# STEP 8 — Unmount
-# ----------------------
 echo "[STEP 8] Unmounting"
-umount -l /mnt/gentoo/dev || true
-umount -l /mnt/gentoo/sys || true
-umount -l /mnt/gentoo/proc || true
-umount -l /mnt/gentoo || true
+umount -l "$MNT/dev" || true
+umount -l "$MNT/sys" || true
+umount -l "$MNT/proc" || true
+umount -l "$MNT" || true
 
-echo "[COMPLETE] AIGM-mini installed — reboot!"
+echo "[COMPLETE] AIGM-mini installed — reboot and boot from disk."
