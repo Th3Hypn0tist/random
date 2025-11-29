@@ -15,6 +15,12 @@ mark_done() {
     touch "$STATE/$1"
 }
 
+echo "[STEP 0] Wiping partition table on /dev/sda"
+wipefs -a /dev/sda || true
+dd if=/dev/zero of=/dev/sda bs=1M count=10 || true
+partprobe /dev/sda || true
+echo "→ Partition table wiped"
+
 echo "[STEP 1] Partitioning disk $DISK"
 # Jos sda1 on jo olemassa → skippaa
 if lsblk | grep -q "^sda1"; then
