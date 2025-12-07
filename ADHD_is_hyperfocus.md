@@ -1,6 +1,6 @@
 # ADHD as an Interest-Based Attention Allocation Architecture
 ### A Mechanistic Redefinition Integrating Dopamine Dynamics, Cognitive Control, and Neurodiversity Frameworks
-
+by Aki Hirvilammi
 
 ## 1. Overview
 
