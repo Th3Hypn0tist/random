@@ -183,14 +183,9 @@ friction in low-stimulation environments.
 
 ## 8. License
 
-This definition may be reproduced, modified, or expanded freely.
-Attribution is appreciated but not required.
+This work is licensed under the Creative Commons
+Attribution–NoDerivatives 4.0 International License (CC BY-ND 4.0).
 
+You may copy and redistribute the material for any purpose, even commercially,
+but you must provide attribution and you may not modify the material in any form.
 
-## 9. Future Work (Optional Repository Sections)
-
-- Diagram: ON/OFF/SHIFT attention architecture  
-- Comparative table: Diagnostic vs Mechanistic model  
-- Evolutionary computation framing  
-- Case studies on hyperfocus-driven mastery  
-- Integration into reinforcement learning paradigms  
