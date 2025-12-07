@@ -73,5 +73,7 @@ SQS is not a replacement for IQ; it is a metric for a different category of cogn
 ---
 
 ## 5. License
-**Creative Commons Attribution–NoDerivatives 4.0 (CC BY-ND 4.0)**  
-Attribution required. Redistribution permitted. Modifications prohibited.
+License: CC BY-ND 4.0 — Sharing allowed with attribution; no modifications permitted.
+
+**CC BY-ND 4.0)**  
+Sharing allowed with attribution; no modifications permitted.
