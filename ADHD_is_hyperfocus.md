@@ -179,6 +179,7 @@ the underlying engine.
 ADHD is therefore not a deficit of attention but a context-dependent
 cognitive strategy with both high adaptive potential and significant
 friction in low-stimulation environments.
+- Aki Hirvilammi
 
 
 ## 8. License
