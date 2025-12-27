@@ -1,0 +1,124 @@
+# SCL – Situational Control Layer
+*A behavior-driven environmental control concept*
+
+**Author:** Aki “Hypnotist” Hirvilammi  
+**Year:** 2025
+
+---
+
+## What is SCL?
+
+**SCL (Situational Control Layer)** is a conceptual control layer designed to interpret *situations* in a physical environment and guide system behavior accordingly.
+
+SCL is **not**:
+- a lighting system
+- a sensor system
+- an automation script
+
+SCL **is** a **decision layer** that sits above infrastructure and determines what kind of response is appropriate in a given situation.
+
+---
+
+## Core idea
+
+Traditional systems react to inputs.  
+**SCL reacts to situations.**
+
+A situation is not a single signal, event, or measurement, but a contextual interpretation of activity over time.
+
+SCL exists to answer one question:
+
+> **What is the right behavior of this environment right now?**
+
+---
+
+## Separation of concerns
+
+SCL is intentionally separated from implementation layers.
+
+- Sensors are interchangeable  
+- Outputs are interchangeable  
+- Infrastructure is replaceable  
+
+SCL does **not** depend on any specific:
+- sensor technology
+- camera type
+- lighting manufacturer
+- hardware vendor
+- communication protocol
+
+These are treated strictly as **inputs** and **outputs**, not intelligence.
+
+---
+
+## Observable behavior (external)
+
+From the outside, SCL-controlled environments may exhibit:
+
+- calm default states  
+- context-dependent transitions  
+- assistance only when needed  
+- escalation without confrontation  
+- social signaling instead of alarms  
+- shared moments instead of notifications  
+
+The internal decision logic producing these behaviors is **not exposed**.
+
+---
+
+## Human-first design principle
+
+SCL is designed so that:
+
+- the system does **not** dominate the experience  
+- humans complete the interaction socially  
+- technology signals, people respond  
+
+SCL does not replace human judgment.  
+It supports it by shaping the environment.
+
+---
+
+## What SCL deliberately does *not* define
+
+This concept intentionally does **not** describe:
+
+- decision algorithms  
+- thresholds or timing  
+- sensor fusion methods  
+- classification logic  
+- state transition rules  
+- prioritization mechanisms  
+
+These belong to implementation, not concept definition.
+
+---
+
+## Purpose of this document
+
+This document exists to:
+
+- define SCL as an original conceptual framework  
+- establish authorship and timestamp  
+- prevent misattribution of the concept  
+- allow future implementations without vendor lock-in  
+
+This is **not** a technical specification.
+
+---
+
+## Summary
+
+SCL introduces a shift:
+
+> from reacting to signals  
+> to interpreting situations  
+> and shaping environments accordingly
+
+The value of SCL lies in **when** something happens —  
+not in **how** it is technically implemented.
+
+---
+
+© 2025 Aki “Hypnotist” Hirvilammi  
+**SCL – Situational Control Layer**
