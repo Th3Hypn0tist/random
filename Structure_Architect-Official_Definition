@@ -1,0 +1,258 @@
+# Structure Architect — Official Definition
+
+> **License:** Creative Commons Attribution–NoDerivatives 4.0 (CC BY-ND 4.0)  
+> You may copy and share this definition freely.  
+> You may NOT modify it.  
+> Attribution to the original source is REQUIRED.
+
+---
+
+## Core Definition
+
+A **Structure Architect** is a person who designs and locks the structure of a whole so that it functions, survives change, and remains operable under real-world conditions.
+
+The work is not about opinions, titles, tools, or domain-specific content.  
+It is about **structure**.
+
+A Structure Architect makes implicit constraints explicit and designs the **smallest stable structure** that can survive reality.
+
+---
+
+## Primary Purpose
+
+**The primary task of a Structure Architect is to make themselves unnecessary.**
+
+A structure is considered successful only when it continues to function, evolve, and recover **after the Structure Architect can be removed without the structure collapsing**.
+
+When this condition is met, the structure can be said to **carry itself**.
+
+---
+
+## Domain Independence
+
+A Structure Architect can design the structure of almost any system **without deep professional expertise in the specific domain**.
+
+This is possible because the work focuses on:
+
+- roles and positions (not professions or identities)
+- responsibilities and decision rights
+- interfaces and dependencies
+- constraints (physical, legal, financial, temporal)
+- failure modes and recovery paths
+
+The Structure Architect models **positions, not people** and **functions, not job titles**.  
+Domain expertise is integrated into the structure, but the structure must never depend on it.
+
+---
+
+## Extended Frontend Definition
+
+In this model, **frontend does NOT mean UI**.
+
+Frontend is everything where the system meets reality:
+
+- sensors and measurement devices
+- cameras and imaging (2D, 3D, IR, multispectral)
+- microphones and audio input
+- physical controls and human interfaces
+- actuators (motors, relays, valves, lights)
+- real-time signals and events
+
+Frontend = **observation and effect**, not presentation.
+
+Full stack therefore begins at the **physical world**, not at a screen.
+
+---
+
+## End-to-End Structural Scope
+
+A Structure Architect understands the full structural chain:
+
+Physical world  
+→ sensors / devices  
+→ edge processing  
+→ data transfer  
+→ backend logic  
+→ analysis and decision-making  
+→ control  
+→ effect back into the physical world
+
+They may not implement every component themselves in every project, but they understand where the chain breaks, distorts, or becomes dangerous.
+
+---
+
+## Required Competence Areas
+
+Structure Architecture requires **deep, multi-domain, proven competence**, including at minimum:
+
+### System Architecture (Deep)
+- decomposition of wholes into stable parts
+- responsibility and interface definition
+- scalability from small to large
+- lifecycle thinking (build → operate → change → retire)
+
+### Full Stack Engineering (End-to-End)
+- frontend → backend → database → infrastructure
+- state management, error handling, authentication
+- data flow across the entire system
+- structural data modeling (not just ORM or queries)
+
+### Database-Level Structure
+- schema and invariant design
+- ownership of data and constraints
+- understanding that databases define what a system can know, change, and prevent
+- migrations as structural change, not technical chores
+
+### Physical World Interfaces
+- signals vs data
+- latency, noise, synchronization
+- calibration, drift, and failure
+- real-time and determinism
+
+### Infrastructure & Operations
+- operating systems, networks, segmentation
+- storage, backup, recovery
+- production realities (24/7 operation)
+
+### Security & Risk Thinking
+- trust boundaries
+- blast radius definition
+- predictability under failure or misuse
+
+### Operational Reality
+- monitoring and detection
+- failure recovery
+- controlled degradation
+
+### Economic & Temporal Realism
+- cost structures
+- long-term consequences of technical choices
+
+### Human & Organizational Structures
+- team boundaries mirror system boundaries
+- responsibility clarity
+- transferability and teachability
+
+### Metacognition
+- ability to model multiple structural options mentally
+- consequence simulation before implementation
+- ability to say early: *“this structure will not hold”*
+
+---
+
+## Integration, Replacement, and Lifecycle Thinking
+
+Integration and replaceability are **structural properties**, not technical tasks.
+
+The same structural logic applies to:
+
+- information systems
+- factory automation and production lines
+- logistics and supply chains
+- project flows (sales → design → production → delivery)
+- creative production (advertising, media, campaigns)
+
+A Structure Architect designs:
+
+- how parts connect
+- how parts can be replaced without stopping the whole
+- how parallel operation and transitions are handled
+- how responsibilities and interfaces remain stable during change
+
+Integration defines **where change is possible, risky, or fatal**.
+
+---
+
+## Risk Management (Core Responsibility)
+
+Risk management is not a phase or document.  
+It is a **built-in property of the structure**.
+
+The core question is not:
+
+> “How do we prevent all failures?”
+
+but:
+
+> “What happens when something inevitably goes wrong?”
+
+---
+
+## Risk Classification
+
+### Structural Risks
+- unclear or incorrect boundaries
+- hidden dependencies
+- invalid assumptions in data or process models
+- structures that cannot adapt to change
+
+These are the most dangerous risks because they **scale and repeat**.
+
+### Operational Risks
+- usage errors
+- capacity and load issues
+- monitoring and recovery gaps
+
+Processes may mitigate them, but structure defines their impact.
+
+### Human Risks
+- fatigue, misunderstanding, mistakes
+- skill limits
+- staff turnover and responsibility shifts
+
+The goal is not to eliminate human error, but to **prevent it from collapsing the whole**.
+
+---
+
+## Human Limits and Variation
+
+A Structure Architect understands:
+
+- where human cognitive, physical, and organizational limits lie
+- which decisions are unrealistic under pressure
+- where overload becomes unsafe
+
+And equally important:
+
+- where those limits can be **consciously and safely stretched**
+- when exceptional performance can be required without systemic collapse
+
+Human limits are never broken by accident — only by design.
+
+Variation is assumed, not exceptional:
+
+- accessibility and disability
+- cognitive differences
+- skill-level variation
+- language, culture, and context differences
+
+Accessibility is not a feature — it is a **structural choice** that determines who can safely use, understand, and maintain the system.
+
+---
+
+## Validation (Proof of Competence)
+
+A Structure Architect is validated only when:
+
+- multiple different structures have been designed
+- structures are used in real conditions (not demos)
+- structures survive change, failure, and pressure
+- failures have occurred **and were structurally corrected**
+- success is repeatable in new contexts
+- the structure does NOT depend on the architect’s continuous presence
+
+One successful structure shows potential.  
+Repeated, self-sustaining structures prove competence.
+
+---
+
+## Final Lock
+
+A Structure Architect succeeds only when:
+
+> **The structure survives their removal.**
+
+If removing the architect collapses the system,  
+the structure was never complete.
+
+---
