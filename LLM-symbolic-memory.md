@@ -214,7 +214,7 @@ flowchart LR
 **Attribution-Only, No-Derivatives License (A-ND)**
 
 Copyright © 2026  
-Original author: *[YOUR NAME / HANDLE]*
+Original author: Aki Hirvilammi
 
 Permission is hereby granted to **read, reference, cite, and discuss** this work, subject to the following conditions:
 
