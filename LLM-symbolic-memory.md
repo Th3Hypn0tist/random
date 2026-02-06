@@ -340,5 +340,17 @@ This license operates on a **good-faith and public traceability model**.
 - You can pay with any Cronos token.
 - The blockchain receipt is the license.
 
-🍕 One Pizza License — simple, fair, and explicit.
+---
 
+### Moltbot Licensing Model
+
+Licensing is based on **end users**, not instances.
+
+- **1 licensed user = unlimited personal/internal Moltbot instances**
+- The fee is **one pizza per end user** (one-time)
+- Instances are not counted and do not require separate payments
+
+If the architecture is provided to additional users (customers, employees, or the public),
+each additional end user requires its own One Pizza License fee (volume discounts may apply).
+
+🍕 One Pizza License — simple, fair, and explicit.
