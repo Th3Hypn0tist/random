@@ -277,7 +277,7 @@ Use of the architecture requires acceptance of the **One Pizza License (OPL)** a
 - Token: **any Cronos-supported coin or token**
 - Payment address:
 
-  `0xAddc61aF05ACc594623c3e73D242C17d169A28b2`
+  0xAddc61aF05ACc594623c3e73D242C17d169A28b2
 
 - Sender pays network gas (CRO).
 
