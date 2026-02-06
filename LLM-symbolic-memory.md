@@ -245,3 +245,100 @@ The goal of this license is to:
 - ensure the original author remains visible in the lineage of the concept
 
 The architecture itself is the contribution.
+
+## Licensability
+
+This architecture is **licensable and not free to use by default**.
+
+Use of the architecture requires acceptance of the **One Pizza License (OPL)** and completion of the required payment.
+
+---
+
+### License Requirement
+
+- Use of this architecture is permitted **only after payment** of the One Pizza License fee.
+- The license fee is **mandatory**, not optional or donation-based.
+- Payment constitutes acceptance of the license terms.
+
+---
+
+### License Fee
+
+- **One-time fee**
+- **One (1) pizza per end user**
+- Pizza price is defined as the **average price in the country** of the user or company.
+- No recurring payments.
+
+---
+
+### Payment Method (Current)
+
+- Network: **Cronos (EVM)**
+- Token: **any Cronos-supported coin or token**
+- Payment address:
+
+  `0xAddc61aF05ACc594623c3e73D242C17d169A28b2`
+
+- Sender pays network gas (CRO).
+
+---
+
+### Proof of License
+
+- A confirmed **on-chain transaction on Cronos** to the above address
+- The transaction hash (txid) serves as sufficient proof of payment
+- No registration, reporting, or manual verification is required
+
+---
+
+### Volatile Tokens
+
+- Payments with volatile tokens are accepted.
+- **Only the token value at the time of payment matters.**
+- Subsequent price changes do not affect license validity.
+- A reasonable good-faith estimate equivalent to one pizza at payment time is sufficient.
+
+---
+
+### Scope of License
+
+Upon payment, the license grants the right to:
+- use the architecture for **personal, research, or commercial purposes**
+- implement the architecture in software or systems
+- deploy it internally or externally
+
+The license does **not** grant:
+- authorship or ownership of the architecture
+- the right to remove attribution
+- the right to relicense or redistribute modified versions of this document
+
+---
+
+### Attribution
+
+Any public use must include:
+- clear attribution to the original author
+- a reference or link to the original repository or document
+
+---
+
+### Enforcement Model
+
+This license operates on a **good-faith and public traceability model**.
+
+- There is no automated enforcement.
+- The on-chain transaction record constitutes the authoritative proof.
+- Use without payment is considered unlicensed use.
+
+---
+
+### Plain English Summary
+
+- If you use the architecture, you must pay.
+- You pay once.
+- You pay one pizza per user.
+- You can pay with any Cronos token.
+- The blockchain receipt is the license.
+
+🍕 One Pizza License — simple, fair, and explicit.
+
