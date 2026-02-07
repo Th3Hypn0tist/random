@@ -203,6 +203,49 @@ cite this work as:
 
 ---
 
+## 10. FAQ
+
+### “Do AI models get worse the more you use them?”
+
+Short answer: no.
+But their *context* often does.
+
+Most LLM systems accumulate state implicitly over time:
+• unstated assumptions
+• residual prompt effects
+• unscoped persistent memory
+• agent-local drift
+
+During continuous use, this creates context pollution.
+Output quality appears to degrade.
+
+When you step away for a few days, you return with:
+→ a clean context
+→ fewer hidden constraints
+→ better results
+
+Same model.
+Different context state.
+
+This is not a model-quality problem.
+It’s a memory architecture problem.
+
+Flat, implicit, agent-local memory degrades over time.
+
+Symbolic Memory avoids this by being:
+• explicit
+• scoped
+• addressable
+• versioned
+• shared across agents
+
+Memory does not silently accumulate.
+It is structured, intentional, and replaceable.
+
+Models don’t decay.
+Unstructured memory does.
+
+
 ## Closing Statement
 
 JIT Symbolic Memory does not make models smarter.
