@@ -1,0 +1,210 @@
+# JIT Symbolic Memory
+## A Design Pattern for AI Systems
+
+Author: Aki Hirvilammi  
+Version: 1.0  
+Status: Design Pattern (Conceptual)
+
+---
+
+## Important Notice
+
+This document describes a **design pattern and a conceptual model**.
+
+It is intentionally **incomplete and non-operational**.
+
+It MUST NOT be treated as:
+- an implementation guide
+- a technical specification
+- a reference architecture
+
+Any system claiming to "implement JIT Symbolic Memory" based solely on this text
+is, by definition, incomplete.
+
+Implementations require additional design decisions, constraints,
+and operational safeguards not described here.
+
+---
+
+## 1. The Illusion of LLM Memory
+
+Modern LLM-based systems often appear to “remember”.
+This appearance is misleading.
+
+The illusion is caused by **conflating context with memory**.
+
+- Context is ephemeral
+- Context is token-bound
+- Context is overwritten continuously
+- Context is not addressable
+- Context is not auditable
+
+Treating context as memory leads to fragile systems,
+unpredictable behavior, and false assumptions about capability.
+
+**LLM memory, as commonly described, does not exist.**
+
+---
+
+## 2. The Core Distinction
+
+This pattern starts from a strict separation:
+
+Context ≠ Memory
+
+They serve different purposes and obey different constraints.
+
+- Context exists to enable immediate reasoning
+- Memory exists to preserve structured knowledge over time
+
+Blurring this boundary produces systems that feel intelligent
+but fail under scale, change, or audit.
+
+---
+
+## 3. The Three-Layer Model
+
+JIT Symbolic Memory introduces a minimal, explicit structure
+consisting of three layers:
+
+### 3.1 Context
+- Ephemeral
+- Token-limited
+- Non-persistent
+- Replaced continuously
+- Used only for active reasoning
+
+### 3.2 Symbolic Memory
+- Persistent
+- Addressable
+- Named
+- Explicitly written and retrieved
+- Independent of model context
+
+### 3.3 Abstraction Layer (ABS)
+- Organizes memory into conceptual structures
+- Provides meaning beyond raw storage
+- Decouples memory from individual conversations
+- Enables reuse across tasks and sessions
+
+Each layer has a distinct role.
+None can substitute another.
+
+---
+
+## 4. The Just-In-Time Principle
+
+Memory must not be injected by default.
+
+**JIT Symbolic Memory is retrieved only when required.**
+
+- No continuous memory stuffing
+- No implicit recall
+- No hidden prompt accumulation
+
+Memory enters context:
+- explicitly
+- intentionally
+- temporarily
+
+This preserves:
+- determinism
+- controllability
+- auditability
+- cost efficiency
+
+---
+
+## 5. The Role of the LLM
+
+Within this pattern, the LLM is not a memory system.
+
+The LLM acts as:
+- a reasoning engine
+- an interpretation engine
+- a natural language interface
+
+It does **not**:
+- own memory
+- persist state
+- decide what must be remembered by itself
+
+All memory operations are explicit and external to the model.
+
+---
+
+## 6. Anti-Patterns
+
+The following recurring approaches conflict with this pattern:
+
+### 6.1 Context Stuffing
+Treating larger context windows as “better memory”.
+
+### 6.2 Vector DB as Memory
+Using similarity search as a substitute for symbolic, addressable memory.
+
+### 6.3 Implicit Recall
+Assuming the model will “remember” without explicit retrieval.
+
+### 6.4 Hidden Prompt Memory
+Embedding state inside evolving system prompts.
+
+### 6.5 Emergent Memory Assumption
+Believing memory will arise automatically from scale or training.
+
+These approaches create systems that appear functional
+but degrade unpredictably.
+
+---
+
+## 7. What This Pattern Is Not
+
+JIT Symbolic Memory is not:
+- AGI
+- a learning mechanism
+- a database replacement
+- a prompt engineering trick
+- a framework or library
+
+It does not solve:
+- alignment
+- ethics
+- planning
+- autonomy
+
+It solves one specific problem:
+**the structural misuse of context as memory**.
+
+---
+
+## 8. Implications
+
+Adopting this pattern enables:
+- model-agnostic architectures
+- long-lived agent systems
+- controlled reasoning environments
+- auditable AI behavior
+- separation of cognition and storage
+
+It shifts system design from:
+“the model remembers”
+to:
+“the system remembers”.
+
+---
+
+## 9. Citation
+
+If you build systems inspired by or aligned with this pattern,
+cite this work as:
+
+> Hirvilammi, A.  
+> *JIT Symbolic Memory: A Design Pattern for AI Systems.*
+
+---
+
+## Closing Statement
+
+JIT Symbolic Memory does not make models smarter.
+
+It makes systems **honest about what they are actually doing**.
