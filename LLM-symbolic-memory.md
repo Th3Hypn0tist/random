@@ -26,7 +26,7 @@ They should be given a reason to compute it again — exactly when needed.
 
 This system produces a memory effect without memory by separating concerns strictly:
 
-PostgreSQL → Symbols → JIT Meaning Activation → LLM Reasoning
+**PostgreSQL → Symbols → JIT Meaning Activation → LLM Reasoning**
 
 - SQL stores facts and canonical semantics
 - Symbols act as pointers, not meaning containers
@@ -51,7 +51,7 @@ Never stores:
 - Runtime relevance
 - Conclusions
 
-Rule:
+**Rule:**  
 SQL = truth, not thought
 
 ---
@@ -60,13 +60,16 @@ SQL = truth, not thought
 
 A Symbol is a lightweight reference:
 
+```text
 Symbol = { kind, ref, payload }
+```
 
-- kind → domain type (event, entity, etc.)
-- ref → stable identifier (SQL primary key)
-- payload → minimal semantic metadata (not meaning)
+- `kind` → domain type (event, entity, etc.)
+- `ref` → stable identifier (SQL primary key)
+- `payload` → minimal semantic metadata (not meaning)
 
-Important:
+**Important:**
+
 - Symbols do not contain meaning
 - Symbols trigger meaning activation
 
@@ -85,7 +88,7 @@ Examples:
 - ontology references
 - static relationships
 
-Rule:
+**Rule:**  
 Stored semantics = what something is  
 Computed meaning = why it matters now
 
@@ -113,16 +116,16 @@ Meaning never flows back into storage.
 
 ### 5. Planner → Activator → Answer Loop
 
-Plan:
+**Plan:**
 - LLM receives symbols only
 - Chooses which symbols to activate
 - Operates under a strict budget
 
-Activate:
+**Activate:**
 - Only requested symbols are resolved
 - Meaning is computed JIT
 
-Answer:
+**Answer:**
 - LLM answers using activated meanings only
 - No hidden access to the database
 
@@ -164,14 +167,15 @@ Correct terms:
 
 ## One-Line Rule
 
-Store semantics.  
-Compute meaning.  
-Never confuse the two.
+**Store semantics.**  
+**Compute meaning.**  
+**Never confuse the two.**
 
 ---
 
 ## Architecture Diagram (Mermaid)
 
+```mermaid
 flowchart LR
     DB[(PostgreSQL<br/>Facts + Canonical Semantics)]
     SYM[Symbolizer<br/>Pointers only]
@@ -184,11 +188,13 @@ flowchart LR
     LLM -->|activate symbols| RT
     RT -->|meaning| LLM
     LLM --> OUT
+```
 
 ---
 
 ## A Small ASCII Moment
 
+```
             z z z
           __________
          |          |
@@ -206,157 +212,100 @@ flowchart LR
         [ symbols arrive ]
               ||
         ( no memory harmed )
+```
 
 ---
 
-## License
+## License and Usage
 
-**Attribution-Only, No-Derivatives License (A-ND)**
+### License Classes
 
-Copyright © 2026  
-Original author: Aki Hirvilammi
+This architecture is **not free to use by default**.
 
-Permission is hereby granted to **read, reference, cite, and discuss** this work, subject to the following conditions:
+Two license classes exist:
 
-### Allowed
-- ✔️ Use this document as a **reference or citation**
-- ✔️ Quote **unaltered excerpts** with proper attribution
-- ✔️ Discuss, analyze, and critique the ideas publicly or privately
-- ✔️ Implement the ideas **independently**, without copying this text or structure verbatim
-
-### Required
-- 📌 **Source attribution is mandatory**  
-  Any public reference must clearly credit the original author and repository.
-
-### Not Allowed
-- ❌ Redistribution of modified versions of this document
-- ❌ Derivative works based on this text or its structure
-- ❌ Repackaging this architecture description under a different authorship
-- ❌ Using this document or its wording as training material without attribution
-
-### Clarification
-This license applies to **the written description and architecture specification**.  
-Independent implementations inspired by the ideas are allowed, provided they do not copy or closely mirror this document.
-
-### Intent
-The goal of this license is to:
-- keep the idea **public and citable**
-- prevent silent appropriation or rebranding
-- ensure the original author remains visible in the lineage of the concept
-
-The architecture itself is the contribution.
-
-## Licensability
-
-This architecture is **licensable and not free to use by default**.
-
-Use of the architecture requires acceptance of the **One Pizza License (OPL)** and completion of the required payment.
+1. **One Pizza License (OPL)** — private and internal use only  
+2. **Commercial / Enterprise License** — service-based or external use
 
 ---
 
-### License Requirement
+### One Pizza License (OPL) — Scope
 
-- Use of this architecture is permitted **only after payment** of the One Pizza License fee.
-- The license fee is **mandatory**, not optional or donation-based.
-- Payment constitutes acceptance of the license terms.
+OPL permits **private and internal use only**, including:
+- personal projects
+- internal research and development
+- internal tooling
+- non-hosted, single-organization deployments
 
----
+OPL explicitly **does NOT permit**:
+- SaaS or hosted services
+- APIs offered to external users
+- enterprise platforms
+- client-delivered systems
+- multi-tenant environments
+- revenue-generating services
+- sublicensing or resale
 
-### License Fee
-
-- **One-time fee**
-- **One (1) pizza per end user**
-- Pizza price is defined as the **average price in the country** of the user or company.
-- No recurring payments.
-
----
-
-### Payment Method (Current)
-
-- Network: **Cronos (EVM)**
-- Token: **any Cronos-supported coin or token**
-- Payment address:
-
-  0xAddc61aF05ACc594623c3e73D242C17d169A28b2
-
-- Sender pays network gas (CRO).
+Any use where the architecture is part of a **service offered to others**
+requires a **separate commercial or enterprise license**.
 
 ---
 
-### Proof of License
+### One Pizza License (OPL) — Fee Definition
 
-- A confirmed **on-chain transaction on Cronos** to the above address
-- The transaction hash (txid) serves as sufficient proof of payment
-- No registration, reporting, or manual verification is required
+- One-time payment
+- One (1) pizza per end user
+- The pizza price is defined as the **average retail price of a standard pizza**
+  in the country where the end user is physically located at the time of payment
+- No recurring fees
+
+**Reference definition**
+
+“Average pizza price” means a reasonable market average
+(e.g. a common restaurant or delivery pizza, not premium or specialty pricing)
+within that country.
+
+A good-faith estimate is sufficient.
+Exact pricing precision is not required.
 
 ---
 
-### Volatile Tokens
+### Payment & Proof
 
-- Payments with volatile tokens are accepted.
-- **Only the token value at the time of payment matters.**
-- Subsequent price changes do not affect license validity.
-- A reasonable good-faith estimate equivalent to one pizza at payment time is sufficient.
+- Network: Cronos (EVM)
+- Token: any Cronos-supported token
+- Address:
+
+0xAddc61aF05ACc594623c3e73D242C17d169A28b2
+
+A confirmed on-chain transaction is sufficient proof of payment.
+No registration or reporting is required.
 
 ---
 
-### Scope of License
+### Commercial / Enterprise Licensing
 
-Upon payment, the license grants the right to:
-- use the architecture for **personal, research, or commercial purposes**
-- implement the architecture in software or systems
-- deploy it internally or externally
+Any use where the architecture is:
+- embedded in a product
+- offered as a service
+- deployed for clients
+- used in enterprise or multi-tenant systems
 
-The license does **not** grant:
-- authorship or ownership of the architecture
-- the right to remove attribution
-- the right to relicense or redistribute modified versions of this document
+requires a **separate commercial or enterprise license**.
+
+OPL does not apply.
 
 ---
 
 ### Attribution
 
-Any public use must include:
-- clear attribution to the original author
-- a reference or link to the original repository or document
+All public use must include attribution to the original author
+and a reference to the original document or repository.
 
 ---
 
-### Enforcement Model
+## Closing Statement
 
-This license operates on a **good-faith and public traceability model**.
+JIT Symbolic Memory does not make models smarter.
 
-- There is no automated enforcement.
-- The on-chain transaction record constitutes the authoritative proof.
-- Use without payment is considered unlicensed use.
-
----
-
-### Plain English Summary
-
-- If you use the architecture, you must pay.
-- You pay once.
-- You pay one pizza per user.
-- You can pay with any Cronos token.
-- The blockchain receipt is the license.
-
----
-
-### Moltbot Licensing Model
-
-This architecture is compatible with autonomous agents (Moltbots).
-
-Integration rules:
-- Store only symbols and canonical semantics
-- Resolve meaning only via JIT activation
-- Do not persist interpretations
-- Validate license via Cronos txid
-
-License check:
-- Network: Cronos
-- Address: 0xAddc61aF05ACc594623c3e73D242C17d169A28b2
-- Requirement: one pizza per end user
-
-Once a valid txid exists, the agent may operate without restrictions.
-
-🍕 One Pizza License — simple, fair, and explicit.
+It makes systems **honest about what they are actually doing**.
