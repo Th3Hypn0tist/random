@@ -11,14 +11,15 @@ Status: Design Pattern (Conceptual)
 
 Reading this document is free.
 
-Use of the **JIT Symbolic Memory** architecture in any system requires an
-explicit license.
+Use of the **JIT Symbolic Memory** architecture in any system requires
+an explicit license.
 
 - **Private and internal use** is permitted under the **One Pizza License (OPL)**.
-- **Service-based, SaaS, enterprise, or client-delivered use is NOT covered**
-  by OPL and requires a separate commercial license.
+- **Service-based use**, including SaaS, hosted platforms, enterprise systems,
+  or client-delivered solutions, is **explicitly excluded from OPL**
+  and requires a separate commercial license.
 
-Details are defined in Section 11.
+Licensing terms are defined in Section 11.
 
 ---
 
@@ -50,7 +51,7 @@ Modern LLM-based systems often appear to “remember”.
 
 They do not.
 
-This illusion emerges from a structural mistake:
+This illusion is caused by a structural error:
 **conflating context with memory**.
 
 Context is:
@@ -67,20 +68,20 @@ Treating context as memory produces systems that:
 - degrade under scale
 
 **LLMs do not have memory.**
-They have context windows.
+They operate within temporary context windows.
 
 ---
 
 ## 2. The Foundational Separation
 
-JIT Symbolic Memory begins with a non-negotiable distinction:
+JIT Symbolic Memory begins with a strict, non-negotiable distinction:
 
 > **Context ≠ Memory**
 
 They serve different purposes and obey different constraints.
 
-- Context exists to support *immediate reasoning*
-- Memory exists to preserve *structured knowledge over time*
+- Context enables *immediate reasoning*
+- Memory preserves *structured knowledge over time*
 
 Any architecture that blurs this boundary may appear intelligent,
 but will eventually fail.
@@ -108,7 +109,7 @@ Context is **never** a storage medium.
 - Persistent
 - Explicitly written
 - Explicitly retrieved
-- Addressable by name or identifier
+- Addressable by identifier
 - Independent of model context
 
 This layer stores **symbols**, not interpretations.
@@ -171,10 +172,10 @@ All memory operations are explicit and external.
 
 ## 6. Anti-Patterns
 
-The following patterns directly conflict with JIT Symbolic Memory.
+The following approaches directly conflict with JIT Symbolic Memory.
 
 ### 6.1 Context Stuffing
-Expanding context windows to simulate memory.
+Using larger context windows to simulate memory.
 
 ### 6.2 Vector Databases as Memory
 Replacing symbolic recall with similarity search.
@@ -188,7 +189,7 @@ Embedding system state inside evolving prompts.
 ### 6.5 Emergent Memory Assumptions
 Expecting memory to arise automatically from scale or training.
 
-These approaches may function temporarily.
+These approaches may appear functional.
 They do not scale reliably.
 
 ---
@@ -269,20 +270,19 @@ This architecture is **not free to use by default**.
 
 Two license classes exist:
 
-1. **One Pizza License (OPL)** — private/internal use only  
-2. **Commercial / Enterprise License** — service-based use
+1. **One Pizza License (OPL)** — private and internal use only  
+2. **Commercial / Enterprise License** — service-based or external use
 
 ---
 
-### 11.2 One Pizza License (OPL)
+### 11.2 One Pizza License (OPL) — Scope
 
 OPL permits **private and internal use only**, including:
 
 - personal projects
-- internal research
-- internal tooling
-- non-hosted deployments
-- systems not offered to third parties
+- internal research and development
+- internal tools
+- non-hosted, single-organization deployments
 
 OPL explicitly **does NOT permit**:
 
@@ -290,17 +290,31 @@ OPL explicitly **does NOT permit**:
 - APIs offered to external users
 - enterprise platforms
 - client-delivered systems
+- multi-tenant environments
 - revenue-generating services
 - sublicensing or resale
 
+Any use where the architecture is part of a **service offered to others**
+requires a **separate commercial license**.
+
 ---
 
-### 11.3 OPL Fee
+### 11.3 One Pizza License (OPL) — Fee Definition
 
 - One-time payment
 - One (1) pizza per end user
-- Pizza price = average local price
+- The pizza price is defined as the **average retail price of a standard pizza**
+  in the country where the end user is physically located at the time of payment
 - No recurring fees
+
+**Reference definition**
+
+The “average pizza price” means a reasonable market average
+(e.g. a common restaurant or delivery pizza, not premium or specialty pricing)
+within that country.
+
+A good-faith estimate is sufficient.
+Exact pricing precision is not required.
 
 ---
 
@@ -312,21 +326,20 @@ OPL explicitly **does NOT permit**:
 
   0xAddc61aF05ACc594623c3e73D242C17d169A28b2
 
-A confirmed on-chain transaction is sufficient proof.
-No registration required.
+A confirmed on-chain transaction is sufficient proof of payment.
+No registration or reporting is required.
 
 ---
 
-### 11.5 Commercial / Enterprise Use
+### 11.5 Commercial / Enterprise Licensing
 
 Any use where the architecture is:
-- part of a service
-- offered to customers
 - embedded in a product
+- offered as a service
 - deployed for clients
-- used in multi-tenant or enterprise environments
+- used in enterprise or multi-tenant systems
 
-requires a **separate commercial license**.
+requires a **separate commercial or enterprise license**.
 
 OPL does not apply.
 
@@ -335,7 +348,7 @@ OPL does not apply.
 ### 11.6 Attribution
 
 All public use must include attribution to the original author
-and reference to the original document or repository.
+and a reference to the original document or repository.
 
 ---
 
