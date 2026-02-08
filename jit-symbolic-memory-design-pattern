@@ -311,6 +311,7 @@ The license does **not** grant:
 - the right to remove attribution
 - the right to relicense or redistribute modified versions of this document
 
+Internal evaluation without deployment is permitted without payment.
 ---
 
 ### Attribution
@@ -323,7 +324,7 @@ Any public use must include:
 
 ### Enforcement Model
 
-This license operates on a **good-faith and public traceability model**.
+This license operates with private use on a **good-faith and public traceability model**.
 
 - There is no automated enforcement.
 - The on-chain transaction record constitutes the authoritative proof.
