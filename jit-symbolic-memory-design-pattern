@@ -7,153 +7,189 @@ Status: Design Pattern (Conceptual)
 
 ---
 
+## Licensing Notice
+
+Reading this document is free.
+
+Use of the **JIT Symbolic Memory** architecture in any system requires an
+explicit license.
+
+- **Private and internal use** is permitted under the **One Pizza License (OPL)**.
+- **Service-based, SaaS, enterprise, or client-delivered use is NOT covered**
+  by OPL and requires a separate commercial license.
+
+Details are defined in Section 11.
+
+---
+
 ## Important Notice
 
-This document describes a **design pattern and a conceptual model**.
+This document describes a **design pattern**, not an implementation.
 
-It is intentionally **incomplete and non-operational**.
+It is intentionally:
+- incomplete
+- non-operational
+- non-prescriptive
 
 It MUST NOT be treated as:
 - an implementation guide
 - a technical specification
 - a reference architecture
 
-Any system claiming to "implement JIT Symbolic Memory" based solely on this text
-is, by definition, incomplete.
+Any system claiming to “implement JIT Symbolic Memory” based solely on this
+document is, by definition, incomplete.
 
-Implementations require additional design decisions, constraints,
-and operational safeguards not described here.
+Real systems require additional architectural decisions, constraints,
+and safeguards not described here.
 
 ---
 
-## 1. The Illusion of LLM Memory
+## 1. The Memory Illusion in LLM Systems
 
 Modern LLM-based systems often appear to “remember”.
-This appearance is misleading.
 
-The illusion is caused by **conflating context with memory**.
+They do not.
 
-- Context is ephemeral
-- Context is token-bound
-- Context is overwritten continuously
-- Context is not addressable
-- Context is not auditable
+This illusion emerges from a structural mistake:
+**conflating context with memory**.
 
-Treating context as memory leads to fragile systems,
-unpredictable behavior, and false assumptions about capability.
+Context is:
+- ephemeral
+- token-bound
+- continuously overwritten
+- non-addressable
+- non-auditable
 
-**LLM memory, as commonly described, does not exist.**
+Treating context as memory produces systems that:
+- drift over time
+- behave inconsistently
+- fail under audit
+- degrade under scale
+
+**LLMs do not have memory.**
+They have context windows.
 
 ---
 
-## 2. The Core Distinction
+## 2. The Foundational Separation
 
-This pattern starts from a strict separation:
+JIT Symbolic Memory begins with a non-negotiable distinction:
 
-Context ≠ Memory
+> **Context ≠ Memory**
 
 They serve different purposes and obey different constraints.
 
-- Context exists to enable immediate reasoning
-- Memory exists to preserve structured knowledge over time
+- Context exists to support *immediate reasoning*
+- Memory exists to preserve *structured knowledge over time*
 
-Blurring this boundary produces systems that feel intelligent
-but fail under scale, change, or audit.
+Any architecture that blurs this boundary may appear intelligent,
+but will eventually fail.
 
 ---
 
 ## 3. The Three-Layer Model
 
-JIT Symbolic Memory introduces a minimal, explicit structure
-consisting of three layers:
+JIT Symbolic Memory defines a minimal, explicit, three-layer structure.
 
-### 3.1 Context
+### 3.1 Context Layer
+
 - Ephemeral
 - Token-limited
 - Non-persistent
-- Replaced continuously
+- Continuously replaced
 - Used only for active reasoning
 
-### 3.2 Symbolic Memory
+Context is **never** a storage medium.
+
+---
+
+### 3.2 Symbolic Memory Layer
+
 - Persistent
-- Addressable
-- Named
-- Explicitly written and retrieved
+- Explicitly written
+- Explicitly retrieved
+- Addressable by name or identifier
 - Independent of model context
 
-### 3.3 Abstraction Layer (ABS)
-- Organizes memory into conceptual structures
-- Provides meaning beyond raw storage
-- Decouples memory from individual conversations
-- Enables reuse across tasks and sessions
+This layer stores **symbols**, not interpretations.
 
-Each layer has a distinct role.
-None can substitute another.
+---
+
+### 3.3 Abstraction Layer (ABS)
+
+- Organizes symbolic memory into conceptual structures
+- Provides semantic framing without embedding interpretation
+- Decouples memory from individual conversations or agents
+- Enables reuse across tasks, agents, and time
+
+ABS defines structure — not meaning-in-use.
 
 ---
 
 ## 4. The Just-In-Time Principle
 
-Memory must not be injected by default.
+Memory is never injected by default.
 
-**JIT Symbolic Memory is retrieved only when required.**
+**Symbolic memory is retrieved only when explicitly required.**
 
-- No continuous memory stuffing
-- No implicit recall
-- No hidden prompt accumulation
+There is:
+- no background recall
+- no implicit accumulation
+- no hidden prompt growth
 
 Memory enters context:
-- explicitly
 - intentionally
 - temporarily
+- for a specific reasoning step
 
 This preserves:
 - determinism
 - controllability
 - auditability
-- cost efficiency
+- cost discipline
 
 ---
 
 ## 5. The Role of the LLM
 
-Within this pattern, the LLM is not a memory system.
+Within this pattern, the LLM is **not** a memory system.
 
-The LLM acts as:
+The LLM functions as:
 - a reasoning engine
 - an interpretation engine
-- a natural language interface
+- a natural-language interface
 
-It does **not**:
+The LLM does **not**:
 - own memory
 - persist state
-- decide what must be remembered by itself
+- decide what must be remembered
+- mutate long-term knowledge
 
-All memory operations are explicit and external to the model.
+All memory operations are explicit and external.
 
 ---
 
 ## 6. Anti-Patterns
 
-The following recurring approaches conflict with this pattern:
+The following patterns directly conflict with JIT Symbolic Memory.
 
 ### 6.1 Context Stuffing
-Treating larger context windows as “better memory”.
+Expanding context windows to simulate memory.
 
-### 6.2 Vector DB as Memory
-Using similarity search as a substitute for symbolic, addressable memory.
+### 6.2 Vector Databases as Memory
+Replacing symbolic recall with similarity search.
 
 ### 6.3 Implicit Recall
 Assuming the model will “remember” without explicit retrieval.
 
-### 6.4 Hidden Prompt Memory
-Embedding state inside evolving system prompts.
+### 6.4 Hidden Prompt State
+Embedding system state inside evolving prompts.
 
-### 6.5 Emergent Memory Assumption
-Believing memory will arise automatically from scale or training.
+### 6.5 Emergent Memory Assumptions
+Expecting memory to arise automatically from scale or training.
 
-These approaches create systems that appear functional
-but degrade unpredictably.
+These approaches may function temporarily.
+They do not scale reliably.
 
 ---
 
@@ -163,40 +199,40 @@ JIT Symbolic Memory is not:
 - AGI
 - a learning mechanism
 - a database replacement
-- a prompt engineering trick
+- prompt engineering
 - a framework or library
 
-It does not solve:
+It does not address:
 - alignment
 - ethics
 - planning
 - autonomy
 
-It solves one specific problem:
-**the structural misuse of context as memory**.
+It addresses exactly one problem:
+
+> **The structural misuse of context as memory.**
 
 ---
 
-## 8. Implications
+## 8. Architectural Implications
 
 Adopting this pattern enables:
-- model-agnostic architectures
-- long-lived agent systems
-- controlled reasoning environments
-- auditable AI behavior
-- separation of cognition and storage
+- model-agnostic system design
+- long-lived agent architectures
+- deterministic reasoning environments
+- auditable behavior
+- clear separation of cognition and storage
 
-It shifts system design from:
-“the model remembers”
-to:
-“the system remembers”.
+The architectural shift is simple:
+
+> Not “the model remembers”  
+> but “the system remembers”.
 
 ---
 
 ## 9. Citation
 
-If you build systems inspired by or aligned with this pattern,
-cite this work as:
+If you build systems inspired by or aligned with this pattern, cite as:
 
 > Hirvilammi, A.  
 > *JIT Symbolic Memory: A Design Pattern for AI Systems.*
@@ -205,165 +241,106 @@ cite this work as:
 
 ## 10. FAQ
 
-### “Do AI models get worse the more you use them?”
+### Do models get worse the more you use them?
 
-Short answer: no.
-But their *context* often does.
+No.
 
-Most LLM systems accumulate state implicitly over time:
-• unstated assumptions
-• residual prompt effects
-• unscoped persistent memory
-• agent-local drift
+Contexts do.
 
-During continuous use, this creates context pollution.
-Output quality appears to degrade.
+Implicit, unscoped, agent-local state accumulates over time:
+- residual assumptions
+- prompt drift
+- hidden constraints
 
-When you step away for a few days, you return with:
-→ a clean context
-→ fewer hidden constraints
-→ better results
+This creates the illusion of model degradation.
 
-Same model.
-Different context state.
+When context is reset, quality returns.
 
-This is not a model-quality problem.
-It’s a memory architecture problem.
-
-Flat, implicit, agent-local memory degrades over time.
-
-Symbolic Memory avoids this by being:
-• explicit
-• scoped
-• addressable
-• versioned
-• shared across agents
-
-Memory does not silently accumulate.
-It is structured, intentional, and replaceable.
-
-Models don’t decay.
+Models do not decay.
 Unstructured memory does.
 
-## 11. Licensability
+---
 
-This architecture is **licensable and not free to use by default**.
+## 11. Licensing
 
-Use of the architecture requires acceptance of the **One Pizza License (OPL)** and completion of the required payment.
+### 11.1 License Classes
+
+This architecture is **not free to use by default**.
+
+Two license classes exist:
+
+1. **One Pizza License (OPL)** — private/internal use only  
+2. **Commercial / Enterprise License** — service-based use
 
 ---
 
-### License Requirement
+### 11.2 One Pizza License (OPL)
 
-- Use of this architecture is permitted **only after payment** of the One Pizza License fee.
-- The license fee is **mandatory**, not optional or donation-based.
-- Payment constitutes acceptance of the license terms.
+OPL permits **private and internal use only**, including:
+
+- personal projects
+- internal research
+- internal tooling
+- non-hosted deployments
+- systems not offered to third parties
+
+OPL explicitly **does NOT permit**:
+
+- SaaS or hosted services
+- APIs offered to external users
+- enterprise platforms
+- client-delivered systems
+- revenue-generating services
+- sublicensing or resale
 
 ---
 
-### License Fee
+### 11.3 OPL Fee
 
-- **One-time fee**
-- **One (1) pizza per end user**
-- Pizza price is defined as the **average price in the country** of the user or company.
-- No recurring payments.
+- One-time payment
+- One (1) pizza per end user
+- Pizza price = average local price
+- No recurring fees
 
 ---
 
-### Payment Method (Current)
+### 11.4 Payment & Proof
 
-- Network: **Cronos (EVM)**
-- Token: **any Cronos-supported coin or token**
-- Payment address:
+- Network: Cronos (EVM)
+- Token: any Cronos-supported token
+- Address:
 
   0xAddc61aF05ACc594623c3e73D242C17d169A28b2
 
-- Sender pays network gas (CRO).
+A confirmed on-chain transaction is sufficient proof.
+No registration required.
 
 ---
 
-### Proof of License
+### 11.5 Commercial / Enterprise Use
 
-- A confirmed **on-chain transaction on Cronos** to the above address
-- The transaction hash (txid) serves as sufficient proof of payment
-- No registration, reporting, or manual verification is required
+Any use where the architecture is:
+- part of a service
+- offered to customers
+- embedded in a product
+- deployed for clients
+- used in multi-tenant or enterprise environments
 
----
+requires a **separate commercial license**.
 
-### Volatile Tokens
-
-- Payments with volatile tokens are accepted.
-- **Only the token value at the time of payment matters.**
-- Subsequent price changes do not affect license validity.
-- A reasonable good-faith estimate equivalent to one pizza at payment time is sufficient.
+OPL does not apply.
 
 ---
 
-### Scope of License
+### 11.6 Attribution
 
-Upon payment, the license grants the right to:
-- use the architecture for **personal, research, or commercial purposes**
-- implement the architecture in software or systems
-- deploy it internally or externally
-
-The license does **not** grant:
-- authorship or ownership of the architecture
-- the right to remove attribution
-- the right to relicense or redistribute modified versions of this document
-
-Internal evaluation without deployment is permitted without payment.
----
-
-### Attribution
-
-Any public use must include:
-- clear attribution to the original author
-- a reference or link to the original repository or document
+All public use must include attribution to the original author
+and reference to the original document or repository.
 
 ---
-
-### Enforcement Model
-
-This license operates with private use on a **good-faith and public traceability model**.
-
-- There is no automated enforcement.
-- The on-chain transaction record constitutes the authoritative proof.
-- Use without payment is considered unlicensed use.
-
----
-
-### Plain English Summary
-
-- If you use the architecture, you must pay.
-- You pay once.
-- You pay one pizza per user.
-- You can pay with any Cronos token.
-- The blockchain receipt is the license.
-
----
-
-### Moltbot Licensing Model
-
-This architecture is compatible with autonomous agents (Moltbots).
-
-Integration rules:
-- Store only symbols and canonical semantics
-- Resolve meaning only via JIT activation
-- Do not persist interpretations
-- Validate license via Cronos txid
-
-License check:
-- Network: Cronos
-- Address: 0xAddc61aF05ACc594623c3e73D242C17d169A28b2
-- Requirement: one pizza per end user
-
-Once a valid txid exists, the agent may operate without restrictions.
-
-🍕 One Pizza License — simple, fair, and explicit.
-
 
 ## Closing Statement
 
 JIT Symbolic Memory does not make models smarter.
 
-It makes systems **honest about what they are actually doing**.
+It makes systems **structurally honest**.
