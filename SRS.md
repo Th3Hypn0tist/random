@@ -47,17 +47,17 @@
    without violating safety invariants.
 
 ### 10. REPUTATION MODEL
-   Reputation built on:
+    Reputation built on:
       - Transparency
       - Predictability
       - Consistency
     Not illusion of perfection.
 
 ### 11. CUSTOMER FILTER
-   If client rejects transparency + structure,
-   mismatch — not compromise.
+    If client rejects transparency + structure,
+    mismatch — not compromise.
     
 ###  12. LONG GAME
-   Durability > Speed
-   Trust > Hype
-   Structure > Optics
+    Durability > Speed
+    Trust > Hype
+    Structure > Optics
