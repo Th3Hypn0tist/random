@@ -1,4 +1,4 @@
-# STRUCTURAL RESILIENCE STANDARD (SRS-1.0)
+# STRUCTURAL RESILIENCE STANDARD (SRS-1.1)
 
 ## CORE PRINCIPLES
 
@@ -41,6 +41,7 @@
      - It is known
      - It is communicated
      - People know how to act
+     - consequences remain within defined and acceptable limits
 
 ### 9. MINIMAL CONSTRAINT RULE
    Restrict as little as possible
